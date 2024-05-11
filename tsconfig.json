@@ -1,0 +1,22 @@
+{
+	"include": ["src/**/*"],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"downlevelIteration": true,
+		"incremental": true,
+		"importHelpers": true,
+		"module": "CommonJS",
+		"moduleResolution": "Node",
+		"noEmitHelpers": false,
+		"noFallthroughCasesInSwitch": true,
+		"preserveConstEnums": true,
+		"removeComments": true,
+		"resolveJsonModule": true,
+		"useUnknownInCatchVariables": false,
+		"experimentalDecorators": true,
+		"jsx": "react",
+		"jsxFactory": "JSX.createElement",
+		"jsxFragmentFactory": "JSX.Fragment"
+	},
+	"exclude": ["node_modules/"]
+}

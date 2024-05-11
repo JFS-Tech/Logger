@@ -1,0 +1,36 @@
+{
+    "name": "@jfstech/logger",
+    "version": "0.0.1",
+    "description": "A custom logger for Node.JS created by JFS-Tech",
+    "author": "Joshua Epstein <josh@jfstech.uk>",
+    "repository": "https://github.com/JFS-Tech/Logger",
+    "homepage": "https://logger.jfstech.uk",
+    "license": "MIT",
+    "types": "dist/index.d.ts",
+    "main": "dist/index.js",
+    "engines": {
+        "node": ">= 4"
+    },
+    "husky": {
+        "hooks": {
+            "pre-push": "pnpm run prettier:fix && pnpm run tsc && pnpm run test:update"
+        }
+    },
+    "scripts": {
+        "ci-check": "pnpm run prettier && pnpm run tsc",
+        "reinstall": "rn -rf node_modules/ dist/ && pnpm install",
+        "prettier": "prettier --list-different 'src/**/*.ts' || (echo '\nPlease fix code formatting by running:\npnpm run prettier:fix'; exit 1)",
+        "prettier:fix": "prettier --write src/**/*.ts",
+        "tsc": "tsc -p . --noEmit",
+        "tsc:watch": "tsc -p . --noEmit --watch",
+        "prebuild": "rm -rf dist/",
+        "build": "tsc -p ./tsconfig.build.json --outDir dist/",
+        "prepublishOnly": "pnpm run reinstall && pnpm run ci-check && pnpm run build"
+    },
+    "devDependencies": {
+        "husky": "^9.0.11",
+        "prettier": "^3.2.5",
+        "typescript": "^5.4.5",
+        "tslib": "^2.6.2"
+    }
+}
