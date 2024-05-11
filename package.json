@@ -1,6 +1,6 @@
 {
     "name": "@jfstech/logger",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "A custom logger for Node.JS created by JFS-Tech",
     "author": "Joshua Epstein <josh@jfstech.uk>",
     "repository": "https://github.com/JFS-Tech/Logger",
