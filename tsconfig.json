@@ -17,7 +17,7 @@
 		"jsx": "react",
 		"jsxFactory": "JSX.createElement",
 		"jsxFragmentFactory": "JSX.Fragment",
-		"lib": ["ES2023"]
+		"lib": ["ES2023", "DOM"]
 	},
 	"exclude": ["node_modules/"]
 }
