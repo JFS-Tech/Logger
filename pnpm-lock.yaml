@@ -11,6 +11,9 @@ devDependencies:
   prettier:
     specifier: ^3.2.5
     version: 3.2.5
+  tsc:
+    specifier: ^2.0.4
+    version: 2.0.4
   tslib:
     specifier: ^2.6.2
     version: 2.6.2
@@ -29,6 +32,11 @@ packages:
   /prettier@3.2.5:
     resolution: {integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==}
     engines: {node: '>=14'}
+    hasBin: true
+    dev: true
+
+  /tsc@2.0.4:
+    resolution: {integrity: sha512-fzoSieZI5KKJVBYGvwbVZs/J5za84f2lSTLPYf6AGiIf43tZ3GNrI1QzTLcjtyDDP4aLxd46RTZq1nQxe7+k5Q==}
     hasBin: true
     dev: true
 
