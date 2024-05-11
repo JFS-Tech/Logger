@@ -27,6 +27,7 @@ let _loggerFactory: LoggerFactory;
 export function getLogger(source?: string, meta?: LogMeta): Logger {
 	if (!_loggerFactory) setLoggerFactory(new SimpleLoggerFactory());
 
+	// @ts-ignore not sure.
 	return _loggerFactory.getLogger(source, meta);
 }
 
