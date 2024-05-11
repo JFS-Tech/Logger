@@ -51,7 +51,13 @@ export class SimpleLogger implements Logger {
 	}
 
 	from(source: string, meta?: LogMeta): Logger {
-		const newLogger = new SimpleLogger(source, { ...this.meta, ...meta });
+		var new_meta = this.meta;
+		if (meta) {
+			if (meta.level) new_meta.level = meta.level;
+			if (meta.source) new_meta.source = meta.source;
+			if (meta.message) new_meta.message = meta.message;
+		}
+		const newLogger = new SimpleLogger(source, new_meta);
 
 		newLogger.setLogLevel(this.level);
 
