@@ -22,7 +22,7 @@
         "tsc": "tsc -p . --noEmit",
         "tsc:watch": "tsc -p . --noEmit --watch",
         "prebuild": "rm -rf dist/",
-        "build": "tsc -p ./tsconfig.build.json --outDir dist/",
+        "build": "tsc -p ./tsconfig.json --outDir dist/",
         "prepublishOnly": "pnpm run reinstall && pnpm run ci-check && pnpm run build"
     },
     "devDependencies": {
