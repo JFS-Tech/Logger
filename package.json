@@ -24,7 +24,8 @@
         "tsc:watch": "tsc -p . --noEmit --watch",
         "prebuild": "rm -rf dist/",
         "build": "tsc -p ./tsconfig.json --outDir dist/",
-        "prepublishOnly": "pnpm run reinstall && pnpm run ci-check && pnpm run build"
+        "prepublishOnly": "pnpm run reinstall && pnpm run ci-check && pnpm run build",
+        "bump": "pnpm version patch"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.24.5",
