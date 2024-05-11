@@ -16,7 +16,7 @@ export interface Logger {
 	 *
 	 * @since 0.0.1
 	 */
-	from(source: string, meta?: LogMeta): Logger;
+	from(source: string, meta?: LogMeta, showTimestamp?: boolean, showSource?: boolean): Logger;
 
 	/**
 	 * By default, the log level is inherited from the parent logger. This method allows

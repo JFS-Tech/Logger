@@ -24,11 +24,11 @@ let _loggerFactory: LoggerFactory;
  * @param meta Initial meta data for new logger.
  * @since 0.0.1
  */
-export function getLogger(source?: string, meta?: LogMeta): Logger {
+export function getLogger(source?: string, meta?: LogMeta, showTimestamp?: boolean, showSource?: boolean): Logger {
 	if (!_loggerFactory) setLoggerFactory(new SimpleLoggerFactory());
 
 	// @ts-ignore not sure.
-	return _loggerFactory.getLogger(source, meta);
+	return _loggerFactory.getLogger(source, meta, showTimestamp, showSource);
 }
 
 /**

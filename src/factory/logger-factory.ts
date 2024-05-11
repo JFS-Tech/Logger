@@ -34,5 +34,5 @@ export interface LoggerFactory {
 	 * - Meta(It will combine with parent logger meta to create a new meta).
 	 * @since 0.0.1
 	 */
-	getLogger(source?: string, meta?: LogMeta): Logger;
+	getLogger(source?: string, meta?: LogMeta, showTimestamp?: boolean, showSource?: boolean): Logger;
 }

@@ -57,10 +57,12 @@ export class SimpleLogger implements Logger {
 		return this.source;
 	}
 
-	from(source: string, meta?: LogMeta): Logger {
+	from(source: string, meta?: LogMeta, showTimestamp?: boolean, showSource?: boolean): Logger {
 		const newLogger = new SimpleLogger(source, { ...this.meta, ...meta });
 
 		newLogger.setLogLevel(this.level);
+		newLogger.setShowSource(showSource ?? this.showSource);
+		newLogger.setShowTimestamp(showTimestamp ?? this.showTimestamp);
 
 		return newLogger;
 	}
