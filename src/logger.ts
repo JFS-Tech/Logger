@@ -34,6 +34,20 @@ export interface Logger {
 	getLogLevel(): LogLevel;
 
 	/**
+	 * Set should show the timestamp at the beginning of the log message.
+	 *
+	 * @since 0.0.4
+	 */
+	setShowTimestamp(show: boolean): void;
+
+	/**
+	 * Set should show the source at the beginning of the log message.
+	 *
+	 * @since 0.0.4
+	 */
+	setShowSource(show: boolean): void;
+
+	/**
 	 * @since 0.0.1
 	 */
 	setMeta(k: string, v: any): void;
@@ -69,6 +83,16 @@ export interface Logger {
 	 * @since 0.0.1
 	 */
 	fatal(message: LogMessage, meta?: LogMeta): void;
+
+	/**
+	 * @since 0.0.4
+	 */
+	success(message: LogMessage, meta?: LogMeta): void;
+
+	/**
+	 * @since 0.0.4
+	 */
+	trace(message: LogMessage, meta?: LogMeta): void;
 
 	/**
 	 * _Usage:_

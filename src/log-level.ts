@@ -28,4 +28,6 @@ export enum LogLevel {
 	 * @since 0.0.1
 	 */
 	DEBUG,
+	TRACE,
+	SUCCESS,
 }

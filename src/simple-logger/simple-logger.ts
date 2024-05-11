@@ -1,6 +1,7 @@
 import { LogLevel } from "../log-level";
 import { LogMessage, LogMeta } from "../logging";
 import { Logger } from "../logger";
+import * as pc from "../utils/picocolours";
 
 const logLevelName = {
 	[LogLevel.DEBUG]: "DEBUG",
@@ -8,6 +9,8 @@ const logLevelName = {
 	[LogLevel.WARN]: "WARN",
 	[LogLevel.ERROR]: "ERROR",
 	[LogLevel.FATAL]: "FATAL",
+	[LogLevel.SUCCESS]: "SUCCESS",
+	[LogLevel.TRACE]: "TRACE",
 };
 
 /**
@@ -27,11 +30,15 @@ export class SimpleLogger implements Logger {
 		[LogLevel.WARN]: this.warn.bind(this),
 		[LogLevel.ERROR]: this.error.bind(this),
 		[LogLevel.FATAL]: this.fatal.bind(this),
+		[LogLevel.SUCCESS]: this.success.bind(this),
+		[LogLevel.TRACE]: this.trace.bind(this),
 	};
 
 	constructor(
 		private source?: string,
-		private meta: LogMeta = {}
+		private meta: LogMeta = {},
+		private showSource?: boolean,
+		private showTimestamp?: boolean
 	) {}
 
 	getLogLevel(): LogLevel {
@@ -51,13 +58,7 @@ export class SimpleLogger implements Logger {
 	}
 
 	from(source: string, meta?: LogMeta): Logger {
-		var new_meta = this.meta;
-		if (meta) {
-			if (meta.level) new_meta.level = meta.level;
-			if (meta.source) new_meta.source = meta.source;
-			if (meta.message) new_meta.message = meta.message;
-		}
-		const newLogger = new SimpleLogger(source, new_meta);
+		const newLogger = new SimpleLogger(source, { ...this.meta, ...meta });
 
 		newLogger.setLogLevel(this.level);
 
@@ -66,6 +67,14 @@ export class SimpleLogger implements Logger {
 
 	setLogLevel(level: LogLevel): void {
 		this.level = level;
+	}
+
+	setShowSource(show: boolean): void {
+		this.showSource = show;
+	}
+
+	setShowTimestamp(show: boolean): void {
+		this.showTimestamp = show;
 	}
 
 	debug(msg: LogMessage, meta?: LogMeta): void {
@@ -96,16 +105,78 @@ export class SimpleLogger implements Logger {
 		console.error(this.format(LogLevel.FATAL, msg, { ...this.meta, ...meta }));
 	}
 
+	success(msg: LogMessage, meta?: LogMeta): void {
+		console.log(this.format(LogLevel.SUCCESS, msg, { ...this.meta, ...meta }));
+	}
+
+	trace(msg: LogMessage, meta?: LogMeta): void {
+		if (this.level < LogLevel.TRACE) return;
+
+		console.trace(this.format(LogLevel.TRACE, msg, { ...this.meta, ...meta }));
+	}
+
 	log(level: LogLevel, msg: LogMessage, meta: LogMeta = {}): void {
 		this.logMethodMap[level](msg, meta);
 	}
 
 	private format(level: LogLevel, msg: LogMessage, meta?: LogMeta) {
-		const ts = new Date().toISOString();
-		const pad = level === LogLevel.INFO ? " " : "";
-		const source = this.source ? `- ${this.source}` : "";
+		const ts = this.showTimestamp ? new Date().toLocaleTimeString() : "";
+		const source = this.source && this.showSource ? ` | ${this.source}` : "";
 		const metaStr = Object.keys(meta).length ? `\n${JSON.stringify(meta)}` : "";
-
-		return `${ts} ${logLevelName[level]}${pad} ${source}: ${msg.toString()}${metaStr}`;
+		const icon = this.getColour(level)(pc.bold(this.getIcon(level)));
+		const opening = this.showTimestamp || this.showSource ? `[${ts}${source}] ` : "";
+		return `${opening}${icon} - ${msg.toString()}${metaStr}`;
 	}
+
+	private getIcon(level: LogLevel) {
+		switch (level) {
+			case LogLevel.DEBUG:
+				return "⚙"; // "⚡"
+			case LogLevel.INFO:
+				return "ℹ";
+			case LogLevel.WARN:
+				return "⚠";
+			case LogLevel.ERROR:
+				return "⨯";
+			case LogLevel.FATAL:
+				return "☠";
+			case LogLevel.SUCCESS:
+				return "✓";
+			case LogLevel.TRACE:
+				return "»";
+			default:
+				return "";
+		}
+	}
+
+	private getColour(level: LogLevel) {
+		switch (level) {
+			case LogLevel.DEBUG:
+				return pc.magenta;
+			case LogLevel.ERROR:
+				return pc.red;
+			case LogLevel.FATAL:
+				return (string: string) => pc.bgRed(pc.white(string));
+			case LogLevel.INFO:
+				return pc.blue;
+			case LogLevel.WARN:
+				return pc.orange;
+			case LogLevel.TRACE:
+				return pc.cyan;
+			case LogLevel.SUCCESS:
+				return pc.green;
+			default:
+				return pc.gray;
+		}
+	}
+}
+
+function formatString(date: Date, formatStr: string) {
+	return formatStr
+		.replace("YYYY", date.getFullYear().toString())
+		.replace("MM", (date.getMonth() + 1).toString())
+		.replace("DD", date.getDate().toString())
+		.replace("hh", date.getHours().toString())
+		.replace("mm", date.getMinutes().toString())
+		.replace("ss", date.getSeconds().toString());
 }
