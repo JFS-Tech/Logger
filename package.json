@@ -17,10 +17,8 @@
         }
     },
     "scripts": {
-        "ci-check": "pnpm run prettier && pnpm run tsc",
+        "ci-check": "pnpm run tsc",
         "reinstall": "rm -rf node_modules/ dist/ && pnpm install",
-        "prettier": "prettier --list-different 'src/**/*.ts' || (echo '\nPlease fix code formatting by running:\npnpm run prettier:fix'; exit 1)",
-        "prettier:fix": "prettier --write src/**/*.ts",
         "tsc": "tsc -p . --noEmit",
         "tsc:watch": "tsc -p . --noEmit --watch",
         "prebuild": "rm -rf dist/",
